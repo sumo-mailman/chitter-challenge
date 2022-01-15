@@ -5,8 +5,7 @@ require './lib/peep'
 class ChitterApp < Sinatra::Base 
   configure :development do 
     register Sinatra::Reloader
-
-
+    also_reload 'lib/peep.rb'
   end 
 
   get '/' do 
@@ -18,5 +17,5 @@ class ChitterApp < Sinatra::Base
     erb :'peeps/index'
   end
 
-  run! if app_file ==$0 
+  run! if app_file == $0 
 end 

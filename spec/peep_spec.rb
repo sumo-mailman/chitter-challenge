@@ -13,10 +13,10 @@ describe Peep do
       peeps = Peep.all
 
       expect(peeps.length).to eq 3
-      expect(peeps.first).to be_a Peep
+      expect(peeps.last).to be_a Peep
       # expect(peeps.first.id).to eq new_peep.id
-      expect(peeps.first.message).to eq 'Peep 1'
-      expect(peeps.first.user_id).to eq 'Josh Lim'
+      expect(peeps.last.message).to eq 'Peep 1'
+      expect(peeps.last.user_id).to eq 'Josh Lim'
 
     end
   end

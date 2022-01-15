@@ -6,16 +6,31 @@ describe Peep do
       connection = PG.connect(dbname: 'peep_manager_test')
 
       # test data
-      connection.exec("INSERT INTO peeps (message) VALUES ('Peep 1');")
-      connection.exec("INSERT INTO peeps (message) VALUES ('Peep 2');")
-      connection.exec("INSERT INTO peeps (message) VALUES ('Peep 3');")
+      new_peep = Peep.create(message: 'Peep 1', user_id: 'Josh Lim')
+      Peep.create(message: 'Peep 2', user_id: 'Josh Lim')
+      Peep.create(message: 'Peep 3', user_id: 'Josh Lim')
 
       peeps = Peep.all
 
-      expect(peeps).to include("Peep 1")
-      expect(peeps).to include("Peep 2")
-      expect(peeps).to include("Peep 3")
+      expect(peeps.length).to eq 3
+      expect(peeps.first).to be_a Peep
+      # expect(peeps.first.id).to eq new_peep.id
+      expect(peeps.first.message).to eq 'Peep 1'
+      expect(peeps.first.user_id).to eq 'Josh Lim'
 
     end
   end
-end
+
+  describe '.create' do 
+    it 'creates a new peep' do
+      peep = Peep.create(message: 'test peep', user_id: 'test_user')
+      persisted_data = PG.connect(dbname: 'peep_manager_test').query("SELECT * FROM peeps WHERE id = #{peep.id};")
+
+      expect(peep).to be_a Peep
+      expect(peep.id).to eq persisted_data.first['id']
+      expect(peep.message).to eq 'test peep'
+      expect(peep.user_id).to eq 'test_user'
+
+    end 
+  end
+end 

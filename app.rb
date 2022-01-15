@@ -6,12 +6,22 @@ class ChitterApp < Sinatra::Base
   configure :development do 
     register Sinatra::Reloader
     also_reload 'lib/peep.rb'
-  end 
+  end
 
+  enable :sessions
+
+  #this is home page where users sign up 
   get '/' do 
-    redirect('/peeps')
-  end 
+    erb :'index'
+  end
 
+  #post request to sign up 
+  post '/sign_up' do 
+    @user_id = params[:user_id]
+    redirect '/peeps'
+  end
+
+  #main page directory?  
   get '/peeps' do
     @peeps = Peep.all
     erb :'peeps/index'

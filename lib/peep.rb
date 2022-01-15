@@ -1,7 +1,7 @@
 require 'pg'
 
 class Peep
-  
+
   def self.all 
     if ENV['ENVIRONMENT'] == 'test'
       connection = PG.connect(dbname: 'peep_manager_test')
@@ -12,3 +12,4 @@ class Peep
     result.map { |peep| peep['message'] } 
   end
 end
+ 

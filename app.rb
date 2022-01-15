@@ -17,7 +17,7 @@ class ChitterApp < Sinatra::Base
 
   #post request to sign up 
   post '/sign_up' do 
-    @user_id = params[:user_id]
+    session[:user_id] = params[:user_id]
     redirect '/peeps'
   end
 
@@ -26,6 +26,18 @@ class ChitterApp < Sinatra::Base
     @peeps = Peep.all
     erb :'peeps/index'
   end
+
+  get '/peeps/new' do
+    erb :'peeps/new'
+  end 
+
+  post '/peeps/create' do
+    connection = PG.connect(dbname: 'peep_manager')
+    message = params[:message]
+    user_id = session[:user_id]
+    connection.exec("INSERT INTO peeps(message, user_id) VALUES ('#{message}', '#{user_id}');")
+    redirect '/peeps'
+  end 
 
   run! if app_file == $0 
 end 

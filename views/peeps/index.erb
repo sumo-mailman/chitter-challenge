@@ -7,7 +7,7 @@
 
 <ol>
   <% @peeps.each do |peep| %>
-    <li><%= peep.message %></li>
+    <li><%= peep.message %> // <%= peep.timestamp.to_s[0,16] %> </li>
   <% end %>
 </ol>
 

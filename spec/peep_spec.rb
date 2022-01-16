@@ -17,6 +17,7 @@ describe Peep do
       # expect(peeps.first.id).to eq new_peep.id
       expect(peeps.last.message).to eq 'Peep 1'
       expect(peeps.last.user_id).to eq 'Josh Lim'
+      expect(peeps.last.id).to eq new_peep.id
 
     end
   end
